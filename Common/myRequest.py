@@ -14,7 +14,7 @@ __author__ = 'zws'
 import requests
 
 
-def myRequest(url,method,request_data):
+def myRequest(url,method,request_data = None):
     if method == "get":
         res = requests.get(url=url,params=request_data,timeout=20)
     elif method == "post":

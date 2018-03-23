@@ -12,6 +12,7 @@
 __author__ = 'zws'
 
 from openpyxl import load_workbook
+from Common.my_logger import *
 
 class DoExcel:
 
@@ -47,16 +48,21 @@ class DoExcel:
             case_data["case_id"] = self.sh_case_data.cell(row=index,column=1).value
             case_data["api_name"] = self.sh_case_data.cell(row=index,column=4).value
             case_data["method"] = self.sh_case_data.cell(row=index, column=5).value
-            case_data["url"] = self.sh_case_data.cell(row=index, column=6).value
+            case_data["url"] = self.sh_case_data.cell(row=2, column=10).value + self.sh_case_data.cell(row=index, column=6).value
+            logging.info(case_data["url"])
             temp_case_data = self.sh_case_data.cell(row=index,column=7).value
             #获取初始值
             init_datas = self.get_init_datas()
-            for key,value in init_datas.items():
-                #如果找到了则替换
-                if temp_case_data.find(key) != -1:
-                    temp_case_data = temp_case_data.replace(key,value)
 
-            case_data["request_data"] = temp_case_data
+            logging.info(temp_case_data)
+
+            if temp_case_data is not None and len(init_datas)> 0:
+                for key,value in init_datas.items():
+                    #如果找到了则替换
+                    if temp_case_data.find(key) != -1:
+                        temp_case_data = temp_case_data.replace(str(key),str(value))
+
+                case_data["request_data"] = temp_case_data
             case_data["expected_data"] = self.sh_case_data.cell(row=index, column=8).value
             case_data["compare_type"] = self.sh_case_data.cell(row=index, column=9).value
             all_case_datas.append(case_data)
