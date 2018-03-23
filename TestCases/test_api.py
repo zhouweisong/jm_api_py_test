@@ -17,9 +17,10 @@ import os
 import unittest
 import ddt
 from Common import dir_config
+from Common.my_logger import *
 
 #获取所有的测试数据
-excel_path = dir_config.testcase_dir + "/api_info.xlsx"
+excel_path = dir_config.testcase_dir + "/jm_api_info.xlsx"
 de = DoExcel(excel_path)
 all_case_datas = de.get_caseDatas_all()
 
@@ -37,11 +38,16 @@ class Test_Api(unittest.TestCase):
 
     @ddt.data(*all_case_datas)
     def test_api(self,case_data):
-        print('请求数据：')
-        print(case_data)
-        res = myRequest.myRequest(case_data["url"],case_data["method"],eval(case_data["request_data"]))
-        print('响应结果：')
-        print(res.text)
+
+        # print(eval(case_data["request_data"]))
+        # print(case_data)
+        logging.info('request_data' in case_data.keys())
+
+        if 'request_data' in case_data.keys():
+            res = myRequest.myRequest(case_data["url"],case_data["method"],request_data=eval(case_data["request_data"]))
+        else:
+            res = myRequest.myRequest(case_data["url"], case_data["method"])
+
         if int(case_data['compare_type']) == 0:
             self.assertEqual(res.text,case_data["expected_data"])
         else:
