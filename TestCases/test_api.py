@@ -48,21 +48,37 @@ class Test_Api(unittest.TestCase):
 
         logging.info('==============开始执行第%d个测试用例=============' % case_data['case_id'])
 
+        global init_1
+        global init_2
+        global init_3
+        global init_4
+        global init_5
+        logging.debug(type(init_1))
+
         if case_data["request_data"] is not None:
+            logging.debug(case_data["request_data"])
+
             if case_data["request_data"].find("${init_1}") != -1:
-                case_data["request_data"] = case_data["request_data"].replace('${init_1}', init_1)
+
+                logging.debug(case_data["request_data"].find("${init_1}") != -1)
+                logging.debug(case_data["request_data"])
+
+                case_data["request_data"] = case_data["request_data"].replace("${init_1}", init_1)
+
+                logging.debug(case_data["request_data"])
             elif case_data["request_data"].find("${init_2}") != -1:
-                case_data["request_data"] = case_data["request_data"].replace('${init_1}', init_2)
+                case_data["request_data"] = case_data["request_data"].replace("${init_2}", init_2)
             elif case_data["request_data"].find("${init_3}") != -1:
-                case_data["request_data"] = case_data["request_data"].replace('${init_1}', init_3)
+                case_data["request_data"] = case_data["request_data"].replace("${init_3}", init_3)
             elif case_data["request_data"].find("${init_4}") != -1:
-                case_data["request_data"] = case_data["request_data"].replace('${init_1}', init_4)
+                case_data["request_data"] = case_data["request_data"].replace("${init_4}", init_4)
             elif case_data["request_data"].find("${init_5}") != -1:
-                case_data["request_data"] = case_data["request_data"].replace('${init_1}', init_5)
+                case_data["request_data"] = case_data["request_data"].replace("${init_5}", init_5)
 
 
 
         res = myRequest.myRequest(case_data["url"], case_data["method"], case_data["request_data"])
+
 
         logging.debug(case_data["url"])
         logging.debug(case_data["request_data"])
@@ -93,9 +109,3 @@ class Test_Api(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
-
-
-
