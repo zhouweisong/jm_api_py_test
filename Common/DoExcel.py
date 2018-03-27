@@ -46,15 +46,13 @@ class DoExcel:
         for index in range(2,self.sh_case_data.max_row+1):
             case_data ={}
             case_data["case_id"] = self.sh_case_data.cell(row=index,column=1).value
-            case_data["api_name"] = self.sh_case_data.cell(row=index,column=4).value
+            case_data["api_name"] = self.sh_case_data.cell(row=index,column=3).value
             case_data["method"] = self.sh_case_data.cell(row=index, column=5).value
-            case_data["url"] = self.sh_case_data.cell(row=2, column=10).value + self.sh_case_data.cell(row=index, column=6).value
-            logging.info(case_data["url"])
+            case_data["url"] = self.sh_case_data.cell(row=2, column=11).value + self.sh_case_data.cell(row=index, column=6).value
             temp_case_data = self.sh_case_data.cell(row=index,column=7).value
             #获取初始值
             init_datas = self.get_init_datas()
 
-            logging.info(temp_case_data)
 
             if temp_case_data is not None and len(init_datas)> 0:
                 for key,value in init_datas.items():
@@ -62,7 +60,7 @@ class DoExcel:
                     if temp_case_data.find(key) != -1:
                         temp_case_data = temp_case_data.replace(str(key),str(value))
 
-                case_data["request_data"] = temp_case_data
+            case_data["request_data"] = temp_case_data
             case_data["expected_data"] = self.sh_case_data.cell(row=index, column=8).value
             case_data["compare_type"] = self.sh_case_data.cell(row=index, column=9).value
             all_case_datas.append(case_data)
