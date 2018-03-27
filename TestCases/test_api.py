@@ -17,6 +17,9 @@ import unittest
 import ddt
 from Common.Get_P import GetTicket
 from Common.my_logger import *
+import  range
+
+
 
 #获取所有的测试数据
 excel_path = dir_config.testcase_dir + "/jm_api_info.xlsx"
